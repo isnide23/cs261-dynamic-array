@@ -10,6 +10,7 @@ class DynamicArray:
         self.capacity = 10
         self.data = np.ndarray(10, 'O')
         self.next_index = 0
+        self.full = False
         
 
     def is_empty(self):
@@ -40,8 +41,47 @@ class DynamicArray:
         self.data = np.ndarray(10, 'O')
         self.next_index = 0
 
+    def pop(self):
+        if self.next_index <= 0:
+            raise IndexError
+        else:
+            self.next_index -= 1
+            return self.data[self.next_index]
+
+    def delete(self, numX):
+        if self.next_index <= 0:
+            raise IndexError
+        elif numX >= self.next_index or numX < 0:
+            raise IndexError
+        else:
+            for i in range(numX, self.next_index):
+                self.data[i] = self.data[i +1]
+            self.next_index -= 1
+            self.data[self.next_index] = None
+                
+    def insert(self, pos, dataX):
+        if pos < 0 or pos >= self.next_index + 1:
+            raise IndexError
+        else:
+            for i in reversed(range(pos, self.next_index + 1)):
+                self.data[i + 1] = self.data[i]
+            self.data[pos] = dataX          
+            self.next_index += 1
+
+    def is_full(self):
+        if self.next_index < 10:
+            return self.full
+        elif self.next_index == 10:
+            self.full = True
+            return self.full
+        
+
+                
+
+    
 
 
+    
     
 
     
